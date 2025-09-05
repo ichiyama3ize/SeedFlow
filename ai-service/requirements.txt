@@ -1,0 +1,61 @@
+# SeedFlow AI Service - Python Dependencies
+
+# AI and ML libraries
+anthropic>=0.66.0
+langchain>=0.3.27
+langchain-openai>=0.3.32
+openai>=1.105.0
+
+# Vector database
+chromadb>=1.0.20
+
+# Web scraping
+beautifulsoup4>=4.13.5
+requests>=2.32.5
+lxml>=6.0.1
+
+# FastAPI and ASGI server
+fastapi>=0.116.1
+uvicorn>=0.35.0
+
+# Data processing
+pydantic>=2.11.7
+pandas>=2.3.2
+numpy>=2.3.2
+
+# HTTP client
+httpx>=0.28.1
+
+# Logging and monitoring
+structlog>=25.4.0
+
+# Development and testing
+pytest>=8.4.1
+pytest-asyncio>=1.1.0
+pytest-cov>=6.2.1
+
+# Environment management
+python-dotenv>=1.1.1
+
+# Additional dependencies for knowledge management
+# Text processing
+nltk>=3.9.1
+spacy>=3.8.2
+
+# Document processing
+pypdf>=5.5.0
+python-docx>=1.1.2
+python-magic>=0.4.27
+
+# Async support
+aiofiles>=24.1.0
+asyncio-mqtt>=0.16.2
+
+# Configuration and validation
+pydantic-settings>=2.8.1
+typing-extensions>=4.12.2
+
+# Utilities
+tenacity>=9.1.0  # Retry logic
+cachetools>=5.5.0  # Caching
+python-dateutil>=2.9.0  # Date utilities
