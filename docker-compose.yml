@@ -1,0 +1,76 @@
+version: '3.8'
+
+services:
+  # Python AI Service
+  ai-service:
+    build:
+      context: .
+      dockerfile: Dockerfile.ai
+    container_name: seedflow-ai-service
+    ports:
+      - "8001:8001"
+    environment:
+      - OPENAI_API_KEY=${OPENAI_API_KEY}
+      - CLAUDE_API_KEY=${CLAUDE_API_KEY:-}
+      - AI_SERVICE_PORT=8001
+      - PYTHONPATH=/app
+    volumes:
+      - ./logs:/app/logs
+    networks:
+      - seedflow-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:8001/ai/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 20s
+
+  # Go Main Application
+  go-app:
+    build:
+      context: .
+      dockerfile: Dockerfile.go
+    container_name: seedflow-go-app
+    ports:
+      - "8080:8080"
+    environment:
+      - KNOWLEDGE_APP_PORT=8080
+      - AI_SERVICE_PORT=8001
+      - AI_SERVICE_HOST=ai-service
+      - DATA_DIR=/app/data
+      - LOG_DIR=/app/logs
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+      - ./exports:/app/exports
+      - ./backups:/app/backups
+      - ./config:/app/config
+    depends_on:
+      ai-service:
+        condition: service_healthy
+    networks:
+      - seedflow-network
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "wget", "--no-verbose", "--tries=1", "--spider", "http://localhost:8080/api/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 30s
+
+networks:
+  seedflow-network:
+    driver: bridge
+
+volumes:
+  seedflow-data:
+    driver: local
+  seedflow-logs:
+    driver: local
+  seedflow-exports:
+    driver: local
+  seedflow-backups:
+    driver: local
+  seedflow-config:
+    driver: local

@@ -1,0 +1,64 @@
+# SeedFlow Knowledge Management Tool Configuration
+
+# アプリケーション設定
+app:
+  name: "SeedFlow"
+  version: "1.0.0"
+  port: 8080
+  host: "0.0.0.0"
+  debug: false
+
+# AIサービス設定
+ai_service:
+  host: "ai-service"
+  port: 8001
+  timeout: 30
+  retry_count: 3
+  models:
+    openai: "gpt-4"
+    claude: "claude-3-sonnet"
+
+# データベース設定
+database:
+  path: "/app/data/knowledge.db"
+  backup_enabled: true
+  backup_interval: "24h"
+  backup_retention: "30d"
+  encryption_enabled: false
+
+# ログ設定
+logging:
+  level: "INFO"
+  format: "json"
+  max_size: "100MB"
+  max_files: 30
+  compress: true
+
+# セキュリティ設定
+security:
+  encryption_enabled: false
+  file_permissions: 600
+  directory_permissions: 700
+  log_sensitive_data: false
+
+# パフォーマンス設定
+performance:
+  max_concurrent_requests: 10
+  request_timeout: 30
+  cache_enabled: true
+  cache_size: "100MB"
+
+# 機能設定
+features:
+  ai_processing: true
+  semantic_search: true
+  auto_backup: true
+  export_formats: ["markdown", "json", "csv"]
+
+# 品質設定
+quality:
+  min_title_length: 5
+  max_title_length: 255
+  min_summary_length: 10
+  max_summary_length: 1000
+  default_quality_threshold: 50
